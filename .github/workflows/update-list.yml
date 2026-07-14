@@ -1,0 +1,36 @@
+name: Daily Update Blocklist
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # 每天 UTC 時間 00:00 執行
+  workflow_dispatch: # 允許手動觸發
+
+jobs:
+  update-list:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download latest blocklists
+        run: |
+          curl -sSL "https://a.dove.isdumb.one/list.txt" -o list.txt
+          curl -sSL "https://raw.githubusercontent.com/Ruddernation-Designs/Adobe-URL-Block-List/master/hosts" -o ruddernation-hosts.txt
+          
+      - name: Check for changes
+        id: git-check
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "changes=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit and push if changed
+        if: steps.git-check.outputs.changes == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add list.txt ruddernation-hosts.txt
+          git commit -m "Auto-update blocklists from upstream sources"
+          git push
