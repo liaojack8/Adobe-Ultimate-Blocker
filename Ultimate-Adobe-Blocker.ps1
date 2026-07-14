@@ -81,7 +81,6 @@ function Update-HostsFile {
     $existingHosts = Get-Content -Path $hostsFilePath
     $combinedList += $existingHosts
 
-    $uniqueEntries = [ordered]out-null
     $uniqueEntries = [ordered]@{}
     $headerLines = [ordered]@{}
     $commentLines = [ordered]@{}
