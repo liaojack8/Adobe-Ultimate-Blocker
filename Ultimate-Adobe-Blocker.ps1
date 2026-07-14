@@ -18,10 +18,10 @@ function Update-HostsFile {
     $hostsFilePath = "$env:SystemRoot\System32\drivers\etc\hosts"
     $backupFilePath = "$env:SystemRoot\System32\drivers\etc\hosts.bak"
     
-    # URL1: Original Author (Extremely accurate for Adobe/Acrobat)
-    $url1 = "https://raw.githubusercontent.com/Ruddernation-Designs/Adobe-URL-Block-List/master/hosts"
-    # URL2: Secondary Author (Massive blocklist)
-    $url2 = "https://a.dove.isdumb.one/list.txt"
+    # URL1: Original Author (Extremely accurate for Adobe/Acrobat) - Synced to your repo
+    $url1 = "https://raw.githubusercontent.com/liaojack8/Adobe-Ultimate-Blocker/main/ruddernation-hosts.txt"
+    # URL2: Secondary Author (Massive blocklist) - Synced to your repo
+    $url2 = "https://raw.githubusercontent.com/liaojack8/Adobe-Ultimate-Blocker/main/list.txt"
 
     if (-not (Test-Path -Path $backupFilePath)) {
         Copy-Item -Path $hostsFilePath -Destination $backupFilePath -Force
