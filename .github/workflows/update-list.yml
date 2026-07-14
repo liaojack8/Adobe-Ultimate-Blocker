@@ -16,6 +16,7 @@ jobs:
         run: |
           curl -sSL "https://a.dove.isdumb.one/list.txt" -o list.txt
           curl -sSL "https://raw.githubusercontent.com/Ruddernation-Designs/Adobe-URL-Block-List/master/hosts" -o ruddernation-hosts.txt
+          curl -sSL "https://raw.githubusercontent.com/ethanaicode/Adobe-Block-Hosts-List/main/hosts" -o ethanaicode-hosts.txt
           
       - name: Check for changes
         id: git-check
@@ -31,6 +32,6 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add list.txt ruddernation-hosts.txt
+          git add list.txt ruddernation-hosts.txt ethanaicode-hosts.txt
           git commit -m "Auto-update blocklists from upstream sources"
           git push

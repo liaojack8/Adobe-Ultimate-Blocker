@@ -22,6 +22,7 @@
 
 * 特別感謝 [ignaciocastro/a-dove-is-dumb](https://github.com/ignaciocastro/a-dove-is-dumb) 提供龐大且持續更新的 Hosts 阻擋清單。
 * 感謝 [Ruddernation-Designs/Adobe-URL-Block-List](https://github.com/Ruddernation-Designs/Adobe-URL-Block-List) 針對 Adobe 體系精心維護的精準 hosts 名單。
+* 感謝 [ethanaicode/Adobe-Block-Hosts-List](https://github.com/ethanaicode/Adobe-Block-Hosts-List) 提供近期活躍更新的驗證伺服器阻擋名單。
 
 ## 🤖 自動化更新備份
 

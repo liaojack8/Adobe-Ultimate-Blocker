@@ -22,6 +22,8 @@ function Update-HostsFile {
     $url1 = "https://raw.githubusercontent.com/liaojack8/Adobe-Ultimate-Blocker/main/ruddernation-hosts.txt"
     # URL2: Secondary Author (Massive blocklist) - Synced to your repo
     $url2 = "https://raw.githubusercontent.com/liaojack8/Adobe-Ultimate-Blocker/main/list.txt"
+    # URL3: Ethanaicode (Highly active alternative) - Synced to your repo
+    $url3 = "https://raw.githubusercontent.com/liaojack8/Adobe-Ultimate-Blocker/main/ethanaicode-hosts.txt"
 
     if (-not (Test-Path -Path $backupFilePath)) {
         Copy-Item -Path $hostsFilePath -Destination $backupFilePath -Force
@@ -52,12 +54,27 @@ function Update-HostsFile {
         Write-Host "[Hosts] Fetched list from a.dove.isdumb.one" -ForegroundColor Green
     } catch {
         Write-Host "[Hosts] Failed to fetch list 2 from URL, trying local backup..." -ForegroundColor Yellow
-        $localBackup = Join-Path -Path $PSScriptRoot -ChildPath "list.txt"
-        if (Test-Path -Path $localBackup) {
-            $combinedList += Get-Content -Path $localBackup
+        $localBackup2 = Join-Path -Path $PSScriptRoot -ChildPath "list.txt"
+        if (Test-Path -Path $localBackup2) {
+            $combinedList += Get-Content -Path $localBackup2
             Write-Host "[Hosts] Loaded local backup list.txt" -ForegroundColor Green
         } else {
-            Write-Host "[Hosts] Local backup not found." -ForegroundColor Red
+            Write-Host "[Hosts] Local backup for list 2 not found." -ForegroundColor Red
+        }
+    }
+
+    try {
+        $web3 = Invoke-WebRequest -Uri $url3 -UseBasicParsing
+        $combinedList += $web3.Content -split "`n"
+        Write-Host "[Hosts] Fetched list from ethanaicode (Alternative)" -ForegroundColor Green
+    } catch {
+        Write-Host "[Hosts] Failed to fetch list 3 from URL, trying local backup..." -ForegroundColor Yellow
+        $localBackup3 = Join-Path -Path $PSScriptRoot -ChildPath "ethanaicode-hosts.txt"
+        if (Test-Path -Path $localBackup3) {
+            $combinedList += Get-Content -Path $localBackup3
+            Write-Host "[Hosts] Loaded local backup ethanaicode-hosts.txt" -ForegroundColor Green
+        } else {
+            Write-Host "[Hosts] Local backup for list 3 not found." -ForegroundColor Red
         }
     }
 
